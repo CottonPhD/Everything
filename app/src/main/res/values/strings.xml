@@ -4,6 +4,14 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="pref_uri_key">connection</string>
+    <string name="pref_uri">URI</string>
+    <string name="pref_uri_value">ws://10.199.66.247/Thingworx/WS</string>
+
+    <string name="pref_appKey_key">appKey</string>
+    <string name="pref_appKey">App Key</string>
+    <string name="pref_appKey_value">8939d40b-4a1e-4501-a73a-3dc9de34f8e5</string>
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->

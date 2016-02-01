@@ -1,21 +1,56 @@
 package com.ptc.ptcnet.everything;
 
 import android.content.Intent;
-import android.media.audiofx.BassBoost;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import com.thingworx.communications.client.things.VirtualThing;
 
-    TextView tv;
+public class MainActivity extends ThingworxActivity {
+
+    public static final int POLLING_RATE = 1000;
+
+    private final String TAG = MainActivity.class.getName();
+    private AndroidThing thing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d(TAG, "onCreate");
+
+        try{
+            thing = new AndroidThing("AndroidThing", "Thing", client);
+
+            startProcessScanRequestThread(POLLING_RATE, new ConnectionStateObserver() {
+                @Override
+                public void onConnectionStateChanged(final boolean connected) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //checkBoxConnected.setChecked(connected);
+                        }
+                    });
+                }
+            });
+
+            if (!hasConnectionPreferences()) {
+                // Show Preferences Activity
+                connectionState = ConnectionState.DISCONNECTED;
+                Intent i = new Intent(this, SettingsActivity.class);
+                startActivityForResult(i, 1);
+                return;
+            }
+
+            connect(new VirtualThing[] {thing});
+
+
+        }catch(Exception e){
+            Log.e(TAG, "Failed to initialize with error.", e);
+            onConnectionFailed("Failed to initialize with error : "+ e.getMessage());
+        }
 
     }
 
@@ -36,5 +71,18 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume() called.");
+        if(getConnectionState() == ConnectionState.DISCONNECTED) {
+            try {
+                connect(new VirtualThing[]{thing});
+            } catch (Exception e) {
+                Log.e(TAG, "Restart with new settings failed.", e);
+            }
+        }
     }
 }

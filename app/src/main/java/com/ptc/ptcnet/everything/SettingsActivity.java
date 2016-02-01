@@ -188,6 +188,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("example_text"));
             bindPreferenceSummaryToValue(findPreference("example_list"));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_appKey_key)));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_uri_key)));
         }
 
         @Override
