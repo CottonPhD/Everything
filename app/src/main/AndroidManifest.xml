@@ -25,6 +25,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ptc.ptcnet.everything.MainActivity" />
         </activity>
+        <activity android:name=".SensorActivity"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

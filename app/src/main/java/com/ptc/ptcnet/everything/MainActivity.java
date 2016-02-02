@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
 
 import com.thingworx.communications.client.things.VirtualThing;
 
@@ -14,12 +17,16 @@ public class MainActivity extends ThingworxActivity {
 
     private final String TAG = MainActivity.class.getName();
     private AndroidThing thing;
+    Button sensorAcivityButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate");
+
+        sensorAcivityButton =(Button) findViewById(R.id.sensorButton);
 
         try{
             thing = new AndroidThing("AndroidThing", "Thing", client);
@@ -52,6 +59,11 @@ public class MainActivity extends ThingworxActivity {
             onConnectionFailed("Failed to initialize with error : "+ e.getMessage());
         }
 
+    }
+
+    public void startSensorActivity(View view){
+        Intent intent = new Intent(this, SensorActivity.class);
+        startActivity(intent);
     }
 
     @Override

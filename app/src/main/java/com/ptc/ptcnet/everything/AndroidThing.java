@@ -3,9 +3,6 @@ package com.ptc.ptcnet.everything;
 import com.thingworx.communications.client.ConnectedThingClient;
 import com.thingworx.communications.client.things.VirtualThing;
 
-/**
- * Created by pdahmen on 01.02.2016.
- */
 public class AndroidThing extends VirtualThing {
 
     public AndroidThing(String name, String description, ConnectedThingClient client) throws Exception {
@@ -16,5 +13,6 @@ public class AndroidThing extends VirtualThing {
         initializeFromAnnotations();
 
     }
+
 
 }
