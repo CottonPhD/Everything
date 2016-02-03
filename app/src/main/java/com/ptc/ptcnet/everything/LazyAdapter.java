@@ -11,12 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by pdahmen on 02.02.2016.
@@ -26,6 +24,7 @@ public class LazyAdapter extends BaseAdapter {
     private SensorActivity activity;
     private String[] array;
     private int[] values;
+    private int[] drawables;
     private static LayoutInflater inflater = null;
     private SensorManager sensorManager;
     public String[] sensorNames;
@@ -33,13 +32,10 @@ public class LazyAdapter extends BaseAdapter {
     private Handler handler;
     Holder holder;
 
-    private boolean accelerometer = true;
-    private boolean magneticField = true;
-    private boolean light = true;
-
-    public LazyAdapter(SensorActivity a, String[] nTitle, int[] nValues, SensorManager sm, String[] sensors, HandlerThread ht) {
+    public LazyAdapter(SensorActivity a, int[] nDrawables, String[] nTitle, int[] nValues, SensorManager sm, String[] sensors, HandlerThread ht) {
         handlerThread = ht;
         sensorManager = sm;
+        drawables = nDrawables;
         activity = a;
         sensorNames = sensors;
         values = nValues;
@@ -65,6 +61,7 @@ public class LazyAdapter extends BaseAdapter {
         TextView tv;
         TextView tv2;
         ImageView imageView;
+        Switch onOffSwitch;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -73,49 +70,53 @@ public class LazyAdapter extends BaseAdapter {
         View vi;
         vi = inflater.inflate(R.layout.list_detail, null);
 
+        holder.onOffSwitch = (Switch) vi.findViewById(R.id.switchKey);
         holder.tv = (TextView) vi.findViewById(R.id.sensorName);
         holder.tv2 = (TextView) vi.findViewById(R.id.sensorValue);
         holder.imageView = (ImageView) vi.findViewById(R.id.onOff);
 
+
+        holder.onOffSwitch.setChecked(true);
+        holder.imageView.setImageResource(drawables[position]);
         holder.imageView.setColorFilter(Color.parseColor("#1565c0"));
-        holder.imageView.setImageResource(R.drawable.power);
         holder.tv.setText(array[position]);
         holder.tv2.setText(Integer.toString(values[position]));
 
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
+        holder.onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                    String name = sensorNames[position];
-                System.out.println("Name: " + name);
-                if(name == "TYPE_MAGNETIC_FIELD") {
-                    if (magneticField == true) {
-                        sensorManager.unregisterListener(activity, sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD));
-                        System.out.println("I work ...........");
-                        holder.imageView.setColorFilter(Color.parseColor("#BDBDBD"));
-                        magneticField = false;
-                    } else {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String name = sensorNames[position];
+
+                if (isChecked) {
+                    if (name == "TYPE_MAGNETIC_FIELD") {
                         sensorManager.registerListener(activity, sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_NORMAL, handler);
-                        holder.imageView.setColorFilter(Color.parseColor("#1565c0"));
-                        magneticField = true;
                     }
-                }
-                else if(name == "TYPE_ACCELEROMETER"){
-                    if(accelerometer == true){
-                        sensorManager.unregisterListener(activity, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
-                        holder.imageView.setColorFilter(Color.parseColor("#BDBDBD"));
-                        System.out.println(holder.imageView.getColorFilter());
-                        accelerometer = false;
-                    }
-                    else {
+                    else if(name =="TYPE_ACCELEROMETER"){
                         sensorManager.registerListener(activity, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL, handler);
-                        holder.imageView.setColorFilter(Color.parseColor("#1565c0"));
-                        accelerometer = true;
+                    }
+                    else if(name =="TYPE_LIGHT"){
+                        sensorManager.registerListener(activity, sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT), SensorManager.SENSOR_DELAY_NORMAL, handler);
+                    }
+                    else if(name =="TYPE_GYROSCOPE"){
+                        sensorManager.registerListener(activity, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_NORMAL, handler);
+                    }
+                } else {
+                    if (name == "TYPE_MAGNETIC_FIELD") {
+                        sensorManager.unregisterListener(activity, sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD));
+                    }
+                    else if(name=="TYPE_ACCELEROMETER"){
+                        sensorManager.unregisterListener(activity, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+                    }
+                    else if(name=="TYPE_LIGHT"){
+                        sensorManager.unregisterListener(activity, sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
+                    }
+                    else if(name=="TYPE_GYROSCOPE"){
+                        sensorManager.unregisterListener(activity, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE));
+
                     }
                 }
             }
         });
-
-        
 
         return vi;
     }

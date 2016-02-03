@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.widget.ListView;
 
+import java.util.List;
+
 
 public class SensorActivity extends MainActivity implements SensorEventListener {
 
@@ -19,9 +21,10 @@ public class SensorActivity extends MainActivity implements SensorEventListener 
     Handler handler;
 
     ListView lv;
-    public static String[] sensorTypes = {"TYPE_ACCELEROMETER", "TYPE_LIGHT", "TYPE_MAGNETIC_FIELD"};
-    public static String[] titles = {"Accelerometer", "Light Sensor", "Magnetic Field"};
-    public static int[] values = {2,3,4};
+    public static String[] sensorTypes = {"TYPE_ACCELEROMETER", "TYPE_LIGHT", "TYPE_MAGNETIC_FIELD", "TYPE_GYROSCOPE"};
+    public static String[] titles = {"Accelerometer", "Light Sensor", "Magnetic Field", "Gyroscope"};
+    public static int[] values = {2,3,4,5};
+    public static int[] drawabls = {R.drawable.speedometer, R.drawable.sun, R.drawable.compass, R.drawable.power};
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -35,11 +38,19 @@ public class SensorActivity extends MainActivity implements SensorEventListener 
         sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL, handler);
         sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_NORMAL, handler);
         sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_LIGHT), SensorManager.SENSOR_DELAY_NORMAL, handler);
+        sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_NORMAL, handler);
+
 
         context=this;
 
+        List<Sensor> list = sm.getSensorList(Sensor.TYPE_ALL);
+
+        for(int i = 0; i<list.size(); i++){
+            System.out.println(list.get(i));
+        }
+
         lv = (ListView) findViewById(R.id.list);
-        lv.setAdapter(new LazyAdapter(this, titles, values, sm, sensorTypes, mHanderThread));
+        lv.setAdapter(new LazyAdapter(this,drawabls, titles, values, sm, sensorTypes, mHanderThread));
     }
 
     @Override

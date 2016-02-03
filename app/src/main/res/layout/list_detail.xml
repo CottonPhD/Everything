@@ -6,7 +6,7 @@
         android:id="@+id/onOff"
         android:layout_width="48dip"
         android:layout_height="48dip"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="8dp"
         android:src="@drawable/power" />
@@ -15,6 +15,7 @@
         android:paddingLeft="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/onOff"
         android:text="Accelerometer"
         android:id="@+id/sensorName"
         android:textColor="#040404"
@@ -28,9 +29,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/sensorName"
+        android:layout_toRightOf="@id/onOff"
         android:text="Value"
         android:textColor="#343434"
         android:textSize="15dip"
         android:layout_marginTop="1dip"/>
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/switchKey"/>
 
 </RelativeLayout>

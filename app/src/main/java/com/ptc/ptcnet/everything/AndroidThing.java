@@ -9,7 +9,9 @@ import com.thingworx.metadata.annotations.ThingworxServiceParameter;
 
 @ThingworxPropertyDefinitions(properties = {
         @ThingworxPropertyDefinition(name="Accelerometer", description = "Geschwindigkeit", baseType = "NUMBER", category = "", aspects = {"isReadOnlyTrue"}),
-        @ThingworxPropertyDefinition(name="MagneticField", description = "Kompass", baseType = "NUMBER", category = "", aspects = {"isReadOnlyTrue"})
+        @ThingworxPropertyDefinition(name="MagneticField", description = "Kompass", baseType = "NUMBER", category = "", aspects = {"isReadOnlyTrue"}),
+        @ThingworxPropertyDefinition(name="Light", description = "Licht in Lux", baseType = "NUMBER", category = "", aspects = {"isReadOnlyTrue"}),
+        @ThingworxPropertyDefinition(name="Gyroscope", description = "Gyroscope", baseType = "NUMBER", category = "", aspects = {"isReadOnlyTrue"})
 })
 public class AndroidThing extends VirtualThing {
 
