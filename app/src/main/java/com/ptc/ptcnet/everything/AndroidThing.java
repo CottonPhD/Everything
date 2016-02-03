@@ -2,7 +2,15 @@ package com.ptc.ptcnet.everything;
 
 import com.thingworx.communications.client.ConnectedThingClient;
 import com.thingworx.communications.client.things.VirtualThing;
+import com.thingworx.metadata.annotations.ThingworxPropertyDefinition;
+import com.thingworx.metadata.annotations.ThingworxPropertyDefinitions;
+import com.thingworx.metadata.annotations.ThingworxServiceParameter;
 
+
+@ThingworxPropertyDefinitions(properties = {
+        @ThingworxPropertyDefinition(name="Accelerometer", description = "Geschwindigkeit", baseType = "NUMBER", category = "", aspects = {"isReadOnlyTrue"}),
+        @ThingworxPropertyDefinition(name="MagneticField", description = "Kompass", baseType = "NUMBER", category = "", aspects = {"isReadOnlyTrue"})
+})
 public class AndroidThing extends VirtualThing {
 
     public AndroidThing(String name, String description, ConnectedThingClient client) throws Exception {

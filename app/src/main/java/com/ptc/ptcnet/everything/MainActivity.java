@@ -16,7 +16,7 @@ public class MainActivity extends ThingworxActivity {
     public static final int POLLING_RATE = 1000;
 
     private final String TAG = MainActivity.class.getName();
-    private AndroidThing thing;
+    public AndroidThing thing;
     Button sensorAcivityButton;
 
 
@@ -88,13 +88,13 @@ public class MainActivity extends ThingworxActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume() called.");
-        if(getConnectionState() == ConnectionState.DISCONNECTED) {
-            try {
-                connect(new VirtualThing[]{thing});
-            } catch (Exception e) {
-                Log.e(TAG, "Restart with new settings failed.", e);
-            }
-        }
+//        Log.i(TAG, "onResume() called.");
+//        if(getConnectionState() == ConnectionState.DISCONNECTED) {
+//            try {
+//                connect(new VirtualThing[]{thing});
+//            } catch (Exception e) {
+//                Log.e(TAG, "Restart with new settings failed.", e);
+//            }
+//        }
     }
 }
