@@ -2,9 +2,11 @@ package com.ptc.ptcnet.everything;
 
 import com.thingworx.communications.client.ConnectedThingClient;
 import com.thingworx.communications.client.things.VirtualThing;
+import com.thingworx.metadata.PropertyDefinition;
 import com.thingworx.metadata.annotations.ThingworxPropertyDefinition;
 import com.thingworx.metadata.annotations.ThingworxPropertyDefinitions;
 import com.thingworx.metadata.annotations.ThingworxServiceParameter;
+import com.thingworx.types.BaseTypes;
 
 
 @ThingworxPropertyDefinitions(properties = {
@@ -24,5 +26,10 @@ public class AndroidThing extends VirtualThing {
 
     }
 
+
+    public void createNewProperty(String name, String description){
+        PropertyDefinition property = new PropertyDefinition(name, description, BaseTypes.NUMBER);
+        this.defineProperty(property);
+    }
 
 }

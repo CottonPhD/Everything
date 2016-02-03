@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.thingworx.communications.client.things.VirtualThing;
 
@@ -52,7 +51,6 @@ public class MainActivity extends ThingworxActivity {
             }
 
             connect(new VirtualThing[] {thing});
-
 
         }catch(Exception e){
             Log.e(TAG, "Failed to initialize with error.", e);
