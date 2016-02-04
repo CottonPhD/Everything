@@ -27,9 +27,18 @@ public class AndroidThing extends VirtualThing {
     }
 
 
-    public void createNewProperty(String name, String description){
-        PropertyDefinition property = new PropertyDefinition(name, description, BaseTypes.NUMBER);
+    public void createNewNumberProperty(String name, String description){
+            PropertyDefinition property = new PropertyDefinition(name, description, BaseTypes.NUMBER);
+            this.defineProperty(property);
+    }
+
+    public void createNewStringProperty(String name, String description){
+        PropertyDefinition property = new PropertyDefinition(name, description, BaseTypes.STRING);
         this.defineProperty(property);
     }
 
+    public void createNewBooleanProperty(String name, String description){
+        PropertyDefinition property = new PropertyDefinition(name, description, BaseTypes.BOOLEAN);
+        this.defineProperty(property);
+    }
 }
