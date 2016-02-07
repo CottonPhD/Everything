@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="Next"
         android:id="@+id/sensorButton"
-        android:backgroundTint="#FFFFF"
+        android:backgroundTint="#FFFFFF"
         android:textColor="@color/colorAccent"
         android:onClick="startSensorActivity"
         android:layout_below="@+id/textView"
